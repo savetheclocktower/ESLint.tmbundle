@@ -22,7 +22,7 @@ If you're using `eslint` in a specific project, you'll likely want to use that p
 TM_ESLINT = '$CWD/node_modules/.bin/eslint'
 ```
 
-If you want linting by default, regardless of context, you can define `TM_ESLINT` (either in **Preferences &rarr; Variables** or in your `~/.tm_properties` file) to point to a global `eslint` installation, or else the bundle will use whichever `eslint` binary it finds in your path.
+If you want linting in all JavaScript files, regardless of location, you can define `TM_ESLINT` (either in **Preferences &rarr; Variables** or in your `~/.tm_properties` file) to point to a global `eslint` installation, or else the bundle will use whichever `eslint` binary it finds in your path.
 
 If a command can't find any `eslint` binary, it'll either complain via tooltip (the “Fix File” and “Validate File” commands) or silently do nothing (the “Quick Lint” command).
 
