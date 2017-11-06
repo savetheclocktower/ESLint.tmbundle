@@ -16,15 +16,17 @@ osascript -e 'tell app "TextMate" to reload bundles'
 
 ## Setup
 
-If you want the bundle to use a specific `eslint` binary, or one that isn't in your `PATH`, define the `TM_ESLINT` variable in your `.tm_properties` file and assign it the path to your `eslint` binary:
+If you're using `eslint` in a specific project, you'll likely want to use that project's version of `eslint`. So define the `TM_ESLINT` variable in your project's `.tm_properties` file and assign it the path to your `eslint` binary:
 
 ```
 TM_ESLINT = '$CWD/node_modules/.bin/eslint'
 ```
 
-Failing that, the bundle will use whichever `eslint` binary it finds in your `PATH`.
+If you want linting by default, regardless of context, you can reference a globally-installed version of `eslint` in your `~/.tm_properties` file, or else the bundle will use whichever `eslint` binary it finds in your path.
 
-ESLint is very good at finding the proper `.eslintrc` file to use, so you don't have to give it special configuration in the bundle. It'll use the nearest `.eslintrc` file to the file you're linting.
+If a command can't find any `eslint` binary, it'll either complain via tooltip (the “Fix File” and “Validate File” commands) or silently do nothing (the “Quick Lint” command).
+
+ESLint itself is very good at finding the proper `.eslintrc` file to use, so you don't have to give it special configuration in the bundle. It'll use the nearest `.eslintrc` file to the file you're linting.
 
 ## Features
 
@@ -38,7 +40,7 @@ If you want details about the warnings and errors, run the `Validate File` comma
 
 ### Fixing
 
-For some of the style rules, ESLint can automatically fix mistakes. To fix the file you're in, run the `Fix File` command (<kbd>Ctrl-Shift-H</kbd> by default). If there are errors or warnings that can be automatically fixed, the command will replace the contents of your file with the fixed version. (You'll still have to save the file to commit the changes.)
+Some style violations — indentation, semicolons, and such — can automatically be fixed by ESLint. To fix the file you're in, run the `Fix File` command (<kbd>Ctrl-Shift-H</kbd> by default). If there are errors or warnings that can be automatically fixed, the command will replace the contents of your file with the fixed version. (You'll still have to save the file to commit the changes.)
 
 If it can't fix your code — either because there's nothing wrong with it, or because the remaining problems must be fixed manually — it'll say so in a tooltip.
 
@@ -52,7 +54,7 @@ If you're working with very large files, you may want to disable automatic linti
 
 (The MIT License)
 
-Copyright (c) 2016 Andrew Dupont,   mit@andrewdupont.net
+Copyright (c) 2016 Andrew Dupont, mit@andrewdupont.net
 
 Permission is hereby granted, free of charge, to any person obtaining
 a copy of this software and associated documentation files (the
