@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>contactEmailRot13</key>
+	<string></string>
+	<key>contactName</key>
+	<string>Andrew Dupont</string>
+	<key>description</key>
+	<string>A bundle for &lt;a href="http://eslint.org"&gt;JSHint&lt;/a&gt;, a community-driven tool to detect errors and potential problems in JavaScript code.</string>
+	<key>name</key>
+	<string>ESLint</string>
+	<key>uuid</key>
+	<string>4AE7A4EC-95DE-4B0A-BFD9-359B5D260863</string>
+</dict>
+</plist>

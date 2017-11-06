@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>beforeRunningCommand</key>
+	<string>nop</string>
+	<key>command</key>
+	<string>#!/usr/bin/env bash
+[[ -f "${TM_SUPPORT_PATH}/lib/bash_init.sh" ]] &amp;&amp; . "${TM_SUPPORT_PATH}/lib/bash_init.sh"
+
+# runs on save; only notifies you if it raises a warning or error
+"$TM_SUPPORT_PATH/bin/ruby18" "$TM_BUNDLE_SUPPORT/bin/quick_lint.rb"
+</string>
+	<key>input</key>
+	<string>none</string>
+	<key>inputFormat</key>
+	<string>text</string>
+	<key>name</key>
+	<string>Quick Lint</string>
+	<key>outputCaret</key>
+	<string>afterOutput</string>
+	<key>outputFormat</key>
+	<string>text</string>
+	<key>outputLocation</key>
+	<string>toolTip</string>
+	<key>scope</key>
+	<string>source.js - source.js.embedded.html</string>
+	<key>semanticClass</key>
+	<string>callback.document.did-save</string>
+	<key>uuid</key>
+	<string>308F695E-1262-4AA0-880E-99B5E5A3779C</string>
+	<key>version</key>
+	<integer>2</integer>
+</dict>
+</plist>
