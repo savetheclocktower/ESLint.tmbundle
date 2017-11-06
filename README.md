@@ -50,11 +50,28 @@ Unlike `eslint --fix`, it **will not commit the changes to disk**; you should sa
 
 If it can't fix your code — either because there's nothing wrong with it, or because the remaining problems must be fixed manually — it'll say so in a tooltip.
 
-## Configuration
+### Ignoring files
 
-If you don't want the bundle to mark your gutters, define a `TM_ESLINT_DISABLE_GUTTER` variable in your `.tm_properties` file. The value doesn't matter — if that variable is present, the bundle will skip gutter marks.
+When you run `eslint` on the command line, ESLint looks for an `.eslintignore` file in whatever directory you run the command from. When the bundle runs the `eslint` command, to determine the right working directory it uses the first value in this list that exists:
 
-If you're working with very large files, you may want to disable automatic linting on save, because it can hang TextMate in extreme cases. If so, you can define `TM_ESLINT_IGNORE` and give it a Ruby-style [file glob pattern][shell glob syntax]. Any file that matches this glob will not get linted on save. (The `Validate File` and `Fix File` commands ignore this setting, since they're opt-in commands.)
+1. the `TM_ESLINT_WORKING_DIRECTORY` environment variable, which you should only define in `.tm_properties` if your project root is somehow not where your `.eslintignore` file is kept;
+2. the `TM_PROJECT_DIRECTORY` environment variable (which TextMate provides when we're inside of a project);
+3. the directory of the file being linted.
+
+If you save a file that's included in your `.eslintignore`, the bundle will skip automatic linting.
+
+If you want to disable automatic linting on certain files that _aren't_ in your `.eslintignore`, you can define `TM_ESLINT_IGNORE` and give it a Ruby-style [file glob pattern][shell glob syntax]: 
+
+```
+TM_ESLINT_IGNORE = "/dist/**/*.js"
+```
+
+Any file that matches this glob will not get linted on save.
+
+Note:
+
+* If you're in a project, the `TM_ESLINT_IGNORE` glob is considered **relative to the project root**, so you should not include `$CWD`.
+* Files matched by `.eslintignore` or `TM_ESLINT_IGNORE` are only ignored on save; you can still run `Validate File` or `Fix File` against these files.)
 
 ## License
 
