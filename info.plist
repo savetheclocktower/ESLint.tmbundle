@@ -7,7 +7,7 @@
 	<key>contactName</key>
 	<string>Andrew Dupont</string>
 	<key>description</key>
-	<string>A bundle for &lt;a href="http://eslint.org"&gt;JSHint&lt;/a&gt;, a community-driven tool to detect errors and potential problems in JavaScript code.</string>
+	<string>A bundle for &lt;a href="http://eslint.org"&gt;ESLint&lt;/a&gt;, the pluggable linting utility for JavaScript and JSX.</string>
 	<key>name</key>
 	<string>ESLint</string>
 	<key>uuid</key>

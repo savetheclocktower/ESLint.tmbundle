@@ -5,9 +5,22 @@ A bundle for [ESLint][], the linter and style checker for JavaScript.
 
 Built for [TextMate 2][textmate].
 
+## Installation
+
+```bash
+mkdir -p ~/Library/Application\ Support/TextMate/Pristine\ Copy/Bundles
+cd ~/Library/Application\ Support/TextMate/Pristine\ Copy/Bundles
+git clone git://github.com/savetheclocktower/ESLint.tmbundle.git
+osascript -e 'tell app "TextMate" to reload bundles'
+```
+
 ## Setup
 
-If you want the bundle to use a specific `eslint` binary, or one that isn't in your `PATH`, define the `TM_ESLINT` variable in your `.tm_properties` file and assign it the path to your `eslint` binary.
+If you want the bundle to use a specific `eslint` binary, or one that isn't in your `PATH`, define the `TM_ESLINT` variable in your `.tm_properties` file and assign it the path to your `eslint` binary:
+
+```
+TM_ESLINT = '$CWD/node_modules/.bin/eslint'
+```
 
 Failing that, the bundle will use whichever `eslint` binary it finds in your `PATH`.
 
@@ -35,10 +48,6 @@ If you don't want the bundle to mark your gutters, define a `TM_ESLINT_DISABLE_G
 
 If you're working with very large files, you may want to disable automatic linting on save, because it can hang TextMate in extreme cases. If so, you can define `TM_ESLINT_IGNORE` and give it a Ruby-style [file glob pattern][shell glob syntax]. Any file that matches this glob will not get linted on save. (The `Validate File` and `Fix File` commands ignore this setting, since they're opt-in commands.)
 
-[eslint]:            http://eslint.org
-[textmate]:          https://github.com/textmate/textmate
-[shell glob syntax]: http://ruby-doc.org/core-1.9.3/Dir.html#method-c-glob
-
 ## License
 
 (The MIT License)
@@ -63,4 +72,8 @@ IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY
 CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
 TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
 SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+[eslint]:            http://eslint.org
+[textmate]:          https://github.com/textmate/textmate
+[shell glob syntax]: http://ruby-doc.org/core-1.9.3/Dir.html#method-c-glob
 
