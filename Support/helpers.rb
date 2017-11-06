@@ -42,19 +42,30 @@ MATE     = ENV['TM_MATE']
 NODE     = ENV.has_key?('TM_NODE') ? ENV['TM_NODE'] : 'node'
 
 
+# Determine where to run the `eslint` command from. Usually this will be the
+# project root.
+def get_working_directory(path)
+  ENV['TM_ESLINT_WORKING_DIRECTORY'] ||
+  ENV['TM_PROJECT_DIRECTORY'] ||
+  path.dirname
+end
+
 # Given a file path, validate it with ESLint and return the parsed JSON
 # output.
-def validate(path)
-  pwd = path.dirname
+def validate(path, use_ignore=false)
+  pwd = get_working_directory(path)
+
   args = [
     TM_ESLINT,
     %Q{#{e_sh(path)}},
     "--format",
     "json"
   ]
-
+  
+  args << '--no-ignore' unless use_ignore
+  
   output, error = TextMate::Process.run(args, :chdir => pwd)
-
+  
   begin
     result = JSON::parse(output)
   rescue Exception => e
@@ -80,12 +91,24 @@ end
 def interpret_result(result)
   total_errors   = 0
   total_warnings = 0
+  
+  ignored = false
 
   result.each do |file|
     total_errors   += file['errorCount']
     total_warnings += file['warningCount']
+    
+    problems = file['messages']
+    problems.each do |p|
+      # ESLint's "we ignored this file"  message comes through as a warning.
+      if p['message'] =~ /ignored/
+        ignored = true
+        total_warnings -= 1
+        break
+      end
+    end
   end
-
+  
   status = []
 
   if (total_errors > 0)
@@ -105,7 +128,8 @@ def interpret_result(result)
     :errors   => total_errors,
     :warnings => total_warnings,
     :status   => status,
-    :results  => result
+    :results  => result,
+    :ignored  => ignored
   }
 end
 

@@ -26,7 +26,7 @@ end
 file = Pathname.new(FILEPATH)
 
 begin
-  result = validate(file)
+  result = validate(file, true)
 rescue Exception => e
   TextMate::exit_show_tool_tip("Something went wrong!\n#{e}")
 end
@@ -34,7 +34,13 @@ end
 mark_errors(result)
 
 # If linting passed, do nothing.
-TextMate::exit_discard if result[:success]
+if result[:success]
+  if result[:ignored]
+    TextMate::exit_show_tool_tip("File ignored by .eslintignore.")
+  else
+    TextMate::exit_discard 
+  end
+end
 
 # Otherwise show the numbers of errors and warnings in a tooltip.
 puts result[:status]
