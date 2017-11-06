@@ -3,7 +3,7 @@
 require 'pp'
 require ENV['TM_BUNDLE_SUPPORT'] + '/helpers.rb'
 
-exit_unless_eslint
+exit_unless_eslint(:silent => true)
 
 # The TM_ESLINT_IGNORE glob, if it exists, should be compared to the path
 # relative to the project directory, not the absolute path.
@@ -26,7 +26,7 @@ end
 file = Pathname.new(FILEPATH)
 
 begin
-  result = validate(file, true)
+  result = validate(file, :use_ignore => true)
 rescue Exception => e
   TextMate::exit_show_tool_tip("Something went wrong!\n#{e}")
 end

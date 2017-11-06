@@ -19,13 +19,8 @@ unless defined?(TM_ESLINT)
   TM_ESLINT = output if $?.exitstatus == 0
 end
 
-if ENV.has_key?('TM_ESLINT_SILENT')
-  SILENT = ENV['TM_ESLINT_SILENT'] == 'true' || ENV['TM_ESLINT_SILENT'] == '1'
-else
-  SILENT = false
-end
-
-def exit_unless_eslint(silent=SILENT)
+def exit_unless_eslint(options={})
+  silent = options.delete(:silent)
   unless defined?(TM_ESLINT)
     exit if silent
     TextMate::exit_show_tool_tip("The ESLint bundle can't find an eslint binary. Either make sure it's defined somewhere in your PATH or define TM_ESLINT in your .tm_properties file with the path to your ESLint binary.")
@@ -41,7 +36,6 @@ FILEPATH = ENV['TM_FILEPATH']
 MATE     = ENV['TM_MATE']
 NODE     = ENV.has_key?('TM_NODE') ? ENV['TM_NODE'] : 'node'
 
-
 # Determine where to run the `eslint` command from. Usually this will be the
 # project root.
 def get_working_directory(path)
@@ -52,18 +46,20 @@ end
 
 # Given a file path, validate it with ESLint and return the parsed JSON
 # output.
-def validate(path, use_ignore=false)
+def validate(path, options={})
+  # Prefer the project directory; that's where we'll find .eslintignore.
   pwd = get_working_directory(path)
+  use_ignore = options.delete(:use_ignore)
+  
+  if path == :all
+    path = "#{pwd}/**/*.js"
+  else
+    path = e_sh(path)
+  end
 
-  args = [
-    TM_ESLINT,
-    %Q{#{e_sh(path)}},
-    "--format",
-    "json"
-  ]
-  
+  args = [TM_ESLINT, path, "--format", "json"]
   args << '--no-ignore' unless use_ignore
-  
+
   output, error = TextMate::Process.run(args, :chdir => pwd)
   
   begin
@@ -286,6 +282,7 @@ def display_result_as_html(results)
 
   results[:results].each do |result|
     name, errors = result['filePath'], result['messages']
+    next unless errors.any?
     output.push( html_for_file(name, errors) )
   end
 

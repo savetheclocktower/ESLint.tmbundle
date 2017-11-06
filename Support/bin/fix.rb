@@ -2,7 +2,7 @@
 
 require ENV['TM_BUNDLE_SUPPORT'] + '/helpers.rb'
 
-exit_unless_eslint(false)
+exit_unless_eslint(:silent => false)
 
 file_path   = ENV['TM_FILEPATH']
 script_path = ENV['TM_BUNDLE_SUPPORT'] + '/bin/eslint-fix.js'

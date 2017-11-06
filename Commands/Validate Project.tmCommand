@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>beforeRunningCommand</key>
+	<string>saveModifiedFiles</string>
+	<key>command</key>
+	<string>#!/usr/bin/env ruby18
+require ENV['TM_SUPPORT_PATH'] + '/lib/web_preview.rb'
+require ENV['TM_BUNDLE_SUPPORT'] + '/helpers.rb'
+
+exit_unless_eslint(:silent =&gt; false)
+
+unless ENV['TM_PROJECT_DIRECTORY']
+  TextMate::exit_show_tool_tip("No project to lint! Define a .tm_properties file in the root of your project and set \"projectDirectory = $CWD\".")
+end
+
+filepath = Pathname.new(ENV['TM_FILEPATH'])
+
+meta = { :title =&gt; "ESLint", :message =&gt; "Linting project..." }
+TextMate::call_with_progress(meta) do
+  result = validate(:all, :use_ignore =&gt; true)
+
+  if result[:success]
+    TextMate::exit_show_tool_tip("Passed ESLint.")
+  end
+
+  puts display_result_as_html(result)
+end
+</string>
+	<key>input</key>
+	<string>none</string>
+	<key>inputFormat</key>
+	<string>text</string>
+	<key>keyEquivalent</key>
+	<string>~@V</string>
+	<key>name</key>
+	<string>Validate Project</string>
+	<key>outputCaret</key>
+	<string>afterOutput</string>
+	<key>outputFormat</key>
+	<string>html</string>
+	<key>outputLocation</key>
+	<string>newWindow</string>
+	<key>uuid</key>
+	<string>67896881-E28A-43D8-ABB2-EAA7DCFD7E0A</string>
+	<key>version</key>
+	<integer>2</integer>
+</dict>
+</plist>
