@@ -96,7 +96,6 @@ def interpret_result(result)
     
     problems = file['messages']
     problems.each do |p|
-      # ESLint's "we ignored this file"  message comes through as a warning.
       if p['message'] =~ /ignored/
         ignored = true
         total_warnings -= 1

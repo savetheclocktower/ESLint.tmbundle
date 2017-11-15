@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>command</key>
+	<string>#!/usr/bin/env bash
+[[ -f "${TM_SUPPORT_PATH}/lib/bash_init.sh" ]] &amp;&amp; . "${TM_SUPPORT_PATH}/lib/bash_init.sh"
+
+"$TM_SUPPORT_PATH/bin/ruby18" "$TM_BUNDLE_SUPPORT/bin/lint_on_open.rb"
+</string>
+	<key>input</key>
+	<string>none</string>
+	<key>name</key>
+	<string>Mark Gutter on Open</string>
+	<key>outputLocation</key>
+	<string>discard</string>
+	<key>scope</key>
+	<string>source.js</string>
+	<key>semanticClass</key>
+	<string>callback.document.did-open</string>
+	<key>uuid</key>
+	<string>58081B0D-7382-4DC0-BC3D-D58474968633</string>
+</dict>
+</plist>

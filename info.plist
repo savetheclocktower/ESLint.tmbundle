@@ -8,6 +8,14 @@
 	<string>Andrew Dupont</string>
 	<key>description</key>
 	<string>A bundle for &lt;a href="http://eslint.org"&gt;ESLint&lt;/a&gt;, the pluggable linting utility for JavaScript and JSX.</string>
+	<key>mainMenu</key>
+	<dict>
+		<key>excludedItems</key>
+		<array>
+			<string>58081B0D-7382-4DC0-BC3D-D58474968633</string>
+			<string>308F695E-1262-4AA0-880E-99B5E5A3779C</string>
+		</array>
+	</dict>
 	<key>name</key>
 	<string>ESLint</string>
 	<key>uuid</key>
